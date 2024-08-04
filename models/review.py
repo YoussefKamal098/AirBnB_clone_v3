@@ -1,24 +1,40 @@
-#!/usr/bin/python
-""" holds class Review"""
-import models
-from models.base_model import BaseModel, Base
-from os import getenv
-import sqlalchemy
+#!/usr/bin/python3
+"""
+This module defines the Review class, which inherits from the BaseModel class.
+"""
+import os
+
 from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy.orm import relationship
+
+from models.base_model import BaseModel, Base
+
+STORAGE_TYPE = os.getenv('HBNB_TYPE_STORAGE')
+
+parent_classes = (
+    BaseModel,
+    Base if STORAGE_TYPE == "db" else object
+)
 
 
-class Review(BaseModel, Base):
-    """Representation of Review """
-    if models.storage_t == 'db':
+class Review(*parent_classes):
+    """
+    Review class represents a review of a place.
+    """
+    if STORAGE_TYPE == "db":
         __tablename__ = 'reviews'
-        place_id = Column(String(60), ForeignKey('places.id'), nullable=False)
-        user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
-        text = Column(String(1024), nullable=False)
-    else:
-        place_id = ""
-        user_id = ""
-        text = ""
 
-    def __init__(self, *args, **kwargs):
-        """initializes Review"""
-        super().__init__(*args, **kwargs)
+        text = Column(String(1024), nullable=False)
+        place_id = Column(String(60),
+                          ForeignKey('places.id', ondelete="CASCADE"),
+                          nullable=False)
+        user_id = Column(String(60),
+                         ForeignKey('users.id', ondelete="CASCADE"),
+                         nullable=False)
+        user = relationship('User', back_populates='reviews')
+        place = relationship('Place', back_populates='reviews')
+
+    else:
+        place_id: str = ""
+        user_id: str = ""
+        text: str = ""

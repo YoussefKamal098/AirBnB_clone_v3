@@ -1,34 +1,53 @@
 #!/usr/bin/python3
-""" holds class State"""
-import models
-from models.base_model import BaseModel, Base
-from models.city import City
-from os import getenv
-import sqlalchemy
-from sqlalchemy import Column, String, ForeignKey
+"""
+This module defines the State class, which inherits from the BaseModel class.
+"""
+
+import os
+
+from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
+from models.base_model import BaseModel, Base
+from models.city import City
 
-class State(BaseModel, Base):
-    """Representation of state """
-    if models.storage_t == "db":
+STORAGE_TYPE = os.getenv('HBNB_TYPE_STORAGE')
+
+parent_classes = (
+    BaseModel,
+    Base if STORAGE_TYPE == "db" else object
+)
+
+
+class State(*parent_classes):
+    """
+    State class represents a state.
+    """
+
+    if STORAGE_TYPE == "db":
         __tablename__ = 'states'
-        name = Column(String(128), nullable=False)
-        cities = relationship("City", backref="state")
+
+        name = Column(String(128), nullable=False, unique=True, index=True)
+        cities = relationship('City', back_populates='state',
+                              passive_deletes=True)
     else:
-        name = ""
+        name: str = ""
 
-    def __init__(self, *args, **kwargs):
-        """initializes state"""
-        super().__init__(*args, **kwargs)
-
-    if models.storage_t != "db":
         @property
         def cities(self):
-            """getter for list of city instances related to the state"""
-            city_list = []
-            all_cities = models.storage.all(City)
-            for city in all_cities.values():
+            """
+            Retrieves the cities associated with the state.
+
+            Returns:
+                list: A list of City objects associated with the state.
+            """
+            from models import storage
+
+            related_cities = []
+            cities = storage.all(City)
+
+            for city in cities.values():
                 if city.state_id == self.id:
-                    city_list.append(city)
-            return city_list
+                    related_cities.append(city)
+
+            return related_cities

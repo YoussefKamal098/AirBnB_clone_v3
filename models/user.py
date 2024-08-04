@@ -1,29 +1,41 @@
 #!/usr/bin/python3
-""" holds class User"""
-import models
-from models.base_model import BaseModel, Base
-from os import getenv
-import sqlalchemy
+"""
+This module defines the User class, which inherits from the BaseModel class.
+"""
+import os
+
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
+from models.base_model import BaseModel, Base
 
-class User(BaseModel, Base):
-    """Representation of a user """
-    if models.storage_t == 'db':
+STORAGE_TYPE = os.getenv('HBNB_TYPE_STORAGE')
+
+parent_classes = (
+    BaseModel,
+    Base if STORAGE_TYPE == "db" else object
+)
+
+
+class User(*parent_classes):
+    """
+    User class represents a user.
+    """
+
+    if STORAGE_TYPE == "db":
         __tablename__ = 'users'
-        email = Column(String(128), nullable=False)
-        password = Column(String(128), nullable=False)
-        first_name = Column(String(128), nullable=True)
-        last_name = Column(String(128), nullable=True)
-        places = relationship("Place", backref="user")
-        reviews = relationship("Review", backref="user")
-    else:
-        email = ""
-        password = ""
-        first_name = ""
-        last_name = ""
 
-    def __init__(self, *args, **kwargs):
-        """initializes user"""
-        super().__init__(*args, **kwargs)
+        email = Column(String(128), nullable=False, unique=True, index=True)
+        password = Column(String(128), nullable=False, unique=True)
+        first_name = Column(String(128), index=True)
+        last_name = Column(String(128), index=True)
+        places = relationship('Place', back_populates='user',
+                              passive_deletes=True)
+        reviews = relationship('Review', back_populates='user',
+                               passive_deletes=True)
+
+    else:
+        email: str = ""
+        password: str = ""
+        first_name: str = ""
+        last_name: str = ""
