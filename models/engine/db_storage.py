@@ -233,7 +233,7 @@ class DBStorage(Storage):
             self.__session.rollback()
             raise err
 
-    def count(self, class_name):
+    def count_by_class_name(self, class_name):
         """
         Counts the number of objects of a given class in the database.
 
@@ -241,7 +241,7 @@ class DBStorage(Storage):
             class_name (str): The name of the class.
 
         Returns:
-            int: The count of objects.
+            int: The count of objects or 0 if the class is not found
         """
         _class = self.get_class(class_name)
         if not _class:

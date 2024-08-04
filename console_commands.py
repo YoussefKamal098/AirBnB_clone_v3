@@ -671,4 +671,4 @@ class CountCommand(AirBnBCommand):
         if not _class:
             return
 
-        print(self._storage.count(class_name=_class.__name__))
+        print(self._storage.count_by_class_name(class_name=_class.__name__))

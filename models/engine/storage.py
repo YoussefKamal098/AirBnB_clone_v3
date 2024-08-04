@@ -4,8 +4,6 @@ This module defines the abstract Storage class,
 which serves as the interface for interacting with
 different storage mechanisms.
 """
-
-import threading
 from abc import ABC, abstractmethod
 
 from models.engine.stored_classes import CLASSES
@@ -44,6 +42,40 @@ class Storage(ABC):
         """Find an object by its class name and ID."""
         pass
 
+    def get(self, cls, id):
+        """
+        Get an object by its class and ID
+        Parameters:
+            cls (BaseModel): the class of the object
+            id (str): the ID of the object
+        Returns:
+            The object if found, otherwise None
+        """
+        if not cls or cls not in self.get_classes():
+            return None
+
+        return self.find(cls.__name__, id)
+
+    def count(self, cls=None):
+        """
+        Count the number of objects of a given class or all classes
+        Parameters:
+            cls (BaseModel): the class to count
+        Returns:
+            The number of objects of the given class or
+            all classes if cls is None or 0 if the class is not found (int)
+        """
+        if not cls:
+            return sum(
+                self.count_by_class_name(cls.__name__)
+                for cls in self.get_classes()
+            )
+
+        if cls not in self.get_classes():
+            return 0
+
+        return self.count_by_class_name(cls.__name__)
+
     @abstractmethod
     def find_all(self, class_name=""):
         """Find all objects of a given class."""
@@ -55,7 +87,7 @@ class Storage(ABC):
         pass
 
     @abstractmethod
-    def count(self, class_name):
+    def count_by_class_name(self, class_name):
         """Count the number of objects of a given class."""
         pass
 

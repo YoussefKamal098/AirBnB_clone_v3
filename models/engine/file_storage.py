@@ -153,13 +153,13 @@ class FileStorage(Storage):
         for attr, value in kwargs.items():
             setattr(obj, attr, value)
 
-    def count(self, class_name):
+    def count_by_class_name(self, class_name):
         """
         Count and returns number of objects of a given class name
         Parameters:
             class_name (str): the name of the class
         Returns:
-            number of objects of a given model if found, otherwise None
+            number of objects of a given model if found, otherwise 0
         """
         if not class_name or class_name not in self.get_classes_names():
             return 0
