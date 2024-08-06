@@ -1,26 +1,30 @@
 #!/usr/bin/python3
-""" Main file for the API """
-import os
+"""app"""
 from flask import Flask
 from models import storage
 from api.v1.views import app_views
+from os import getenv
 
 app = Flask(__name__)
+
+
+app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def close_storage(exception):
-    """Close the storage"""
+def tear(self):
+    ''' closes storage engine '''
     storage.close()
 
 
 if __name__ == '__main__':
-    HOST = os.getenv('HBNB_API_HOST')
-    PORT = os.getenv('HBNB_API_PORT')
-
-    app.run(
-        host=(HOST if HOST else "0.0.0.0"),
-        port=(PORT if PORT else 5000),
-        threaded=True
-    )
+    if getenv("HBNB_API_HOST") is None:
+        HBNB_API_HOST = '0.0.0.0'
+    else:
+        HBNB_API_HOST = getenv("HBNB_API_HOST")
+    if getenv("HBNB_API_PORT") is None:
+        HBNB_API_PORT = 5000
+    else:
+        HBNB_API_PORT = int(getenv("HBNB_API_PORT"))
+    app.run(host=HBNB_API_HOST, port=HBNB_API_PORT, threaded=True)
