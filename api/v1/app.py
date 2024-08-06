@@ -1,11 +1,6 @@
 #!/usr/bin/python3
 """
 This module sets up and runs a Flask application for the HBNB API.
-
-The application is configured to:
-- Register a blueprint containing the API views.
-- Close the storage at the end of the application context.
-- Run the application on a specified host and port with threading enabled.
 """
 
 import os
