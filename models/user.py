@@ -21,6 +21,7 @@ class User(*parent_classes):
     """
     User class represents a user.
     """
+    NOT_UPDATABLE = ['email']
 
     if STORAGE_TYPE == "db":
         __tablename__ = 'users'
@@ -39,3 +40,18 @@ class User(*parent_classes):
         password: str = ""
         first_name: str = ""
         last_name: str = ""
+
+    def update(self, **kwargs):
+        """
+        Updates thr User instance with the key/value pairs in kwargs.
+
+        This method updates only the attributes of the User instance
+        that can be updated.
+
+        Parameters:
+            **kwargs (dict): Arbitrary keyword arguments.
+        """
+        for attr in User.NOT_UPDATABLE:
+            kwargs.pop(attr, None)
+
+        super().update(**kwargs)
