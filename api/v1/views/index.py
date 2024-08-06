@@ -6,7 +6,6 @@ This module sets up a Flask route to return the status of the application.
 from flask import jsonify
 
 from models import storage
-from models.engine.stored_classes import CLASSES
 
 from api.v1.views import app_views
 
@@ -21,14 +20,17 @@ def status():
 def get_stats():
     """ retrieves the number of each objects by type """
     classes = {
-        "users": "User", "places": "Place", "states": "State",
-        "cities": "City", "amenities": "Amenity",
+        "users": "User",
+        "places": "Place",
+        "states": "State",
+        "cities": "City",
+        "amenities": "Amenity",
         "reviews": "Review"
     }
 
     return jsonify(
         {
-            key: storage.count(CLASSES.get(value, "invalid"))
+            key: storage.count(storage.get_class(value))
             for key, value in classes.items()
         }
     )
