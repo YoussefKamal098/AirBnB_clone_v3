@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-""" Index file for the API """
+"""
+This module sets up a Flask route to return the status of the application.
+"""
 
 from flask import jsonify
 from api.v1.views import app_views

@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-""" Main file of the API v1 """
+"""
+This module initializes the Flask blueprint for the API views.
+"""
 
 from flask import Blueprint
 

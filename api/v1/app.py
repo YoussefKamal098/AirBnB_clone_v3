@@ -6,12 +6,6 @@ The application is configured to:
 - Register a blueprint containing the API views.
 - Close the storage at the end of the application context.
 - Run the application on a specified host and port with threading enabled.
-
-Modules:
-    os: Provides a way to interact with the operating system.
-    flask: A microframework for Python based on Werkzeug and Jinja2.
-    storage: A module responsible for storage operations.
-    app_views: A module containing the API views registered as a blueprint.
 """
 
 import os
