@@ -130,28 +130,24 @@ class FileStorage(Storage):
         return [str(obj) for key, obj in self.__objects.items()
                 if obj.__class__.__name__ == class_name]
 
-    def update(self, obj=None, **kwargs):
+    def update(self, obj=None, attr=None, value=None):
         """
-        Updates attributes of a given object with new
-        values provided in kwargs.
+        Updates a single attribute of a given object with a new value.
 
-        This method takes an object and a set of keyword
-        arguments representing attribute-value pairs.
-        It updates the object's attributes with the provided values.
+        This method takes an object, an attribute name, and a value.
+        It updates the object's attribute with the provided value.
 
         Parameters:
             obj (BaseModel): The object to be updated. If None or the
                         object type is not among the recognized classes,
                         the method returns without making any changes.
-            **kwargs: Arbitrary keyword arguments representing
-                    the attribute names and their new values
-                    to update on the object.
+            attr (str): The name of the attribute to update.
+            value: The new value to set for the specified attribute.
         """
-        if not obj or type(obj) not in self.get_classes():
+        if not obj or type(obj) not in self.get_classes() or attr is None:
             return
 
-        for attr, value in kwargs.items():
-            setattr(obj, attr, value)
+        setattr(obj, attr, value)
 
     def count_by_class_name(self, class_name):
         """

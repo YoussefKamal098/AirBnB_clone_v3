@@ -194,23 +194,21 @@ class DBStorage(Storage):
 
         return [str(instance) for instance in self.all(_class).values()]
 
-    def update(self, obj=None, **kwargs):
+    def update(self, obj=None, attr=None, value=None):
         """
-        Updates attributes of a given object with new values
-        provided in kwargs.
+        Updates a single attribute of a given object with a new value.
 
-        This method updates the specified attributes of an
-        object in the database using the provided keyword arguments.
+        This method updates the specified attribute of an
+        object in the database using the provided attribute name and value.
         The method queries the object's class in the session and applies
-        the updates to the object with the matching ID. Changes are flushed
+        the update to the object with the matching ID. Changes are flushed
         to the session but not committed.
 
         Parameters:
             obj (BaseModel): The object to be updated. If None,
                         the method returns without making any changes.
-            **kwargs: Arbitrary keyword arguments representing the
-                    attribute names and their new values to update
-                    on the object.
+            attr (str): The name of the attribute to update.
+            value: The new value to set for the specified attribute.
 
         Raises:
             SQLAlchemyError: If an error occurs during the update process, it
@@ -221,13 +219,13 @@ class DBStorage(Storage):
             After calling this method, you should call the save method
             to commit the changes to the database.
         """
-        if not obj:
+        if not obj or attr is None:
             return
 
         try:
             self.__session.refresh(obj)
             self.__session.query(obj.__class__) \
-                .filter_by(id=obj.id).update(kwargs)
+                .filter_by(id=obj.id).update({attr: value})
             self.__session.flush()
         except SQLAlchemyError as err:
             self.__session.rollback()

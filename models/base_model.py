@@ -109,10 +109,9 @@ class BaseModel:
         """
         from models import storage
 
-        for attr in self.__class__.NOT_UPDATABLE:
-            kwargs.pop(attr, None)
-
-        storage.update(self, **kwargs)
+        for attr, value in kwargs.items():
+            if attr not in self.__class__.NOT_UPDATABLE:
+                storage.update(self, attr=attr, value=value)
 
     def __str__(self):
         """
