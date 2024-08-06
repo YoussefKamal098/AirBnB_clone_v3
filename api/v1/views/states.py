@@ -58,18 +58,18 @@ def post_state():
     return jsonify(new_state.to_dict()), 201
 
 
-@app_views.route("/states/<state_id>", methods=["PUT"])
-def put_state(state_id):
-    """Update a State object"""
-    state = storage.get(State, state_id)
-    if not state:
+@app_views.route('/states/<state_id>', methods=['PUT'])
+def updates_state(state_id):
+    '''Updates a State object'''
+    all_states = storage.all(State).values()
+    state_obj = [obj.to_dict() for obj in all_states if obj.id == state_id]
+    if state_obj == []:
         abort(404)
-
-    update_data = request.get_json()
-    if not update_data:
-        abort(400, "Not a JSON")
-
-    state.name = update_data.get("name", state.name)
-    state.save()
-
-    return jsonify(state.to_dict()), 200
+    if not request.get_json():
+        abort(400, 'Not a JSON')
+    state_obj[0]['name'] = request.json['name']
+    for obj in all_states:
+        if obj.id == state_id:
+            obj.name = request.json['name']
+    storage.save()
+    return jsonify(state_obj[0]), 200
