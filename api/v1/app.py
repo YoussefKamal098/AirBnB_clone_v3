@@ -4,7 +4,7 @@ This module sets up and runs a Flask application for the HBNB API.
 """
 
 import os
-from flask import Flask
+from flask import Flask, make_response
 from models import storage
 from api.v1.views import app_views
 
@@ -16,6 +16,12 @@ app.register_blueprint(app_views)
 def close_storage(exception):
     """Close the storage"""
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(exception):
+    """Return a JSON-formatted 404 response"""
+    return make_response({"error": "Not found"}, 404)
 
 
 if __name__ == '__main__':
