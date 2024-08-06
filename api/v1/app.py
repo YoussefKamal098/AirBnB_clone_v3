@@ -25,5 +25,6 @@ if __name__ == '__main__':
     app.run(
         host=(HOST if HOST else "0.0.0.0"),
         port=(PORT if PORT else 5000),
-        threaded=True
+        threaded=True,
+        debug=True
     )
