@@ -48,7 +48,7 @@ from models.amenity import Amenity
 from api.v1.views import app_views
 
 
-@app_views.route("/amenities/", methods=["GET"])
+@app_views.route("/amenities", methods=["GET"])
 def get_amenities():
     """Return a JSON list of all Amenity objects"""
     return jsonify([
@@ -80,7 +80,7 @@ def delete_amenity(amenity_id):
     return jsonify({}), 200
 
 
-@app_views.route("/amenities/", methods=["POST"])
+@app_views.route("/amenities", methods=["POST"])
 def post_amenity():
     """Create a new Amenity object"""
     amenity_data = request.get_json()
