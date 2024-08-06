@@ -23,6 +23,8 @@ class City(*parent_classes):
     City class represents a city within a geographic location.
     """
 
+    NOT_UPDATABLE = ['state_id']
+
     if STORAGE_TYPE == "db":
         __tablename__ = 'cities'
 
@@ -40,3 +42,18 @@ class City(*parent_classes):
     else:
         name: str = ""
         state_id: str = ""
+
+    def update(self, **kwargs):
+        """
+        Updates the City instance with the key/value pairs in kwargs.
+
+        This method updates only the attributes of the City instance
+        that can be updated.
+
+        Parameters:
+            **kwargs (dict): Arbitrary keyword arguments.
+        """
+        for attr in self.__class__.NOT_UPDATABLE:
+            kwargs.pop(attr, None)
+
+        super().update(self, **kwargs)

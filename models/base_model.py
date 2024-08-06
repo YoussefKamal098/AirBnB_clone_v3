@@ -20,6 +20,8 @@ class BaseModel:
     Base class for all models.
     """
 
+    NOT_UPDATABLE = ["id", "created_at", "updated_at"]
+
     if STORAGE_TYPE == 'db':
         id = Column(String(60), primary_key=True)
         created_at = Column(DATETIME, nullable=False,
@@ -96,7 +98,19 @@ class BaseModel:
         storage.delete(self)
 
     def update(self, **kwargs):
+        """
+        Updates the object's attributes with the provided values.
+
+        This method updates only the attributes of the object
+        that can be updated.
+
+        Parameters:
+            **kwargs (dict): Arbitrary keyword arguments.
+        """
         from models import storage
+
+        for attr in self.__class__.NOT_UPDATABLE:
+            kwargs.pop(attr, None)
 
         storage.update(self, **kwargs)
 

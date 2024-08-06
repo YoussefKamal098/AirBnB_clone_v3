@@ -23,7 +23,7 @@ def get_states():
 def get_state(state_id):
     """Return a JSON representation of a State object"""
     state = storage.get(State, state_id)
-    if state is None:
+    if not state:
         abort(404)
 
     return jsonify(state.to_dict())
@@ -33,7 +33,7 @@ def get_state(state_id):
 def delete_state(state_id):
     """Delete a State object"""
     state = storage.get(State, state_id)
-    if state is None:
+    if not state:
         abort(404)
 
     state.delete()
@@ -69,7 +69,7 @@ def put_state(state_id):
     if not update_data:
         abort(400, "Not a JSON")
 
-    state.name = update_data.get("name", state.name)
+    state.update(**update_data)
     state.save()
 
     return jsonify(state.to_dict()), 200
