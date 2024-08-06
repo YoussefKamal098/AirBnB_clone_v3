@@ -104,7 +104,7 @@ def put_amenity(amenity_id):
         abort(404)
 
     amenity_data = request.get_json()
-    if not amenity_data:
+    if amenity_data is None:
         abort(400, "Not a JSON")
 
     amenity.update(**amenity_data)
