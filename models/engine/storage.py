@@ -82,8 +82,8 @@ class Storage(ABC):
         pass
 
     @abstractmethod
-    def update(self, obj=None, **kwargs):
-        """Update an object's attributes."""
+    def update(self, obj=None, attr=None, value=None):
+        """Update an object's attribute."""
         pass
 
     @abstractmethod

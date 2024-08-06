@@ -53,8 +53,7 @@ class City(*parent_classes):
         Parameters:
             **kwargs (dict): Arbitrary keyword arguments.
         """
-
-        for attr in self.__class__.NOT_UPDATABLE:
+        for attr in City.NOT_UPDATABLE:
             kwargs.pop(attr, None)
 
-        super().update(self, **kwargs)
+        super().update(**kwargs)

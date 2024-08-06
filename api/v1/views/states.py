@@ -1,6 +1,53 @@
 #!/usr/bin/python3
 """
 This module sets up a Flask route to return a JSON list of all State objects.
+It also allows for GET, POST, PUT, and DELETE requests.
+
+- GET requests return a JSON representation of a State object or
+    a 404 error if the State object does not exist.
+
+- POST requests create a new State object. returns a 400 error if the request
+    is not JSON formatted or if the JSON body is missing a name key.
+
+- PUT requests update a State object. returns a 404 error if the
+    State object does not exist or if the request is not JSON formatted.
+
+
+- DELETE requests delete a State object. returns a 404 error
+    if the State object does not exist.
+
+All responses are JSON formatted.
+
+** PUT requests are expected to have a JSON body with the following format:
+{
+    "name": "California"
+}
+
+** POST requests are expected to have a JSON body with the following format:
+{
+    "name": "California"
+}
+
+** PUT requests are expected to have a JSON body with the following format:
+{
+    "name": "California"
+}
+
+** DELETE requests are expected to have an empty JSON body.
+** GET requests do not require a JSON body.
+
+The following routes are defined:
+GET /states
+GET /states/<state_id>
+DELETE /states/<state_id>
+POST /states
+PUT /states/<state_id>
+The following error codes are returned:
+404: Not found
+400: Not a JSON
+400: Missing name
+200: OK
+201: Created
 """
 from flask import jsonify, abort, request
 
