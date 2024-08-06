@@ -32,5 +32,4 @@ if __name__ == '__main__':
         host=(HOST if HOST else "0.0.0.0"),
         port=(PORT if PORT else 5000),
         threaded=True,
-        debug=True
     )
