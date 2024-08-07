@@ -42,19 +42,19 @@ class Storage(ABC):
         """Find an object by its class name and ID."""
         pass
 
-    def get(self, cls, id):
+    def get(self, cls, _id):
         """
         Get an object by its class and ID
         Parameters:
             cls (BaseModel): the class of the object
-            id (str): the ID of the object
+            _id (str): the ID of the object
         Returns:
             The object if found, otherwise None
         """
         if not cls or cls not in self.get_classes():
             return None
 
-        return self.find(cls.__name__, id)
+        return self.find(cls.__name__, _id)
 
     def count(self, cls=None):
         """
