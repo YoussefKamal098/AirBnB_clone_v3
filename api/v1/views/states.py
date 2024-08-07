@@ -34,6 +34,7 @@ All responses are JSON formatted.
 }
 
 ** DELETE requests are expected to have an empty JSON body.
+
 ** GET requests do not require a JSON body.
 
 The following routes are defined:
@@ -41,7 +42,8 @@ GET /states
 GET /states/<state_id>
 DELETE /states/<state_id>
 POST /states
-PUT /states/<state_id>
+PUT /states/
+
 The following error codes are returned:
 404: Not found
 400: Not a JSON
@@ -49,6 +51,7 @@ The following error codes are returned:
 200: OK
 201: Created
 """
+
 from flask import jsonify, abort, request
 
 from models import storage
