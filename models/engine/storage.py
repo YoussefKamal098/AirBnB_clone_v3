@@ -109,7 +109,7 @@ class Storage(ABC):
         if not class_name or not _id:
             return None
 
-        return f"{class_name}.{_id}"
+        return f'{class_name}.{_id}'
 
     def get_classes(self):
         """Returns a tuple of classes"""
