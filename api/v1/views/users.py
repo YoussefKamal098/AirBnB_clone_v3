@@ -54,7 +54,6 @@ The following error codes are returned:
 200: OK
 201: Created
 """
-
 from flask import jsonify, abort, request
 from models.user import User
 from models import storage
