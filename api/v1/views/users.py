@@ -45,6 +45,14 @@ GET /users/<user_id>
 DELETE /users/<user_id>
 POST /users
 PUT /users/<user_id>
+
+The following error codes are returned:
+404: Not found
+400: Not a JSON
+400: Missing email
+400: Missing password
+200: OK
+201: Created
 """
 
 from flask import jsonify, abort, request
