@@ -86,7 +86,7 @@ class BaseModel:
 
         dictionary["created_at"] = getattr(self, "created_at").isoformat()
         dictionary["updated_at"] = getattr(self, "updated_at").isoformat()
-        dictionary["__class__"] = f"{self.__class__.__name__}"
+        dictionary["__class__"] = self.__class__.__name__
 
         dictionary.pop("_sa_instance_state", None)
 
