@@ -31,4 +31,4 @@ class Amenity(*parent_classes):
                                        secondary='place_amenity',
                                        back_populates='amenities')
     else:
-        name: str = ""
+        name = ""

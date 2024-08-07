@@ -31,7 +31,7 @@ class State(*parent_classes):
         cities = relationship('City', back_populates='state',
                               passive_deletes=True)
     else:
-        name: str = ""
+        name = ""
 
         @property
         def cities(self):

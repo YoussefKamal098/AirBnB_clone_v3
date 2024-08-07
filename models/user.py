@@ -36,10 +36,10 @@ class User(*parent_classes):
                                passive_deletes=True)
 
     else:
-        email: str = ""
-        password: str = ""
-        first_name: str = ""
-        last_name: str = ""
+        email = ""
+        password = ""
+        first_name = ""
+        last_name = ""
 
     def update(self, **kwargs):
         """

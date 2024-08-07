@@ -40,8 +40,8 @@ class City(*parent_classes):
             UniqueConstraint('name', 'state_id', name='_name_state_id_uc'),
         )
     else:
-        name: str = ""
-        state_id: str = ""
+        name = ""
+        state_id = ""
 
     def update(self, **kwargs):
         """

@@ -35,6 +35,6 @@ class Review(*parent_classes):
         place = relationship('Place', back_populates='reviews')
 
     else:
-        place_id: str = ""
-        user_id: str = ""
-        text: str = ""
+        place_id = ""
+        user_id = ""
+        text = ""
