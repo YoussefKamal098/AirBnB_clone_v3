@@ -86,7 +86,7 @@ class BaseModel:
 
         dictionary["created_at"] = getattr(self, "created_at").isoformat()
         dictionary["updated_at"] = getattr(self, "updated_at").isoformat()
-        dictionary["__class__"] = self.__class__.__name__
+        dictionary["__class__"] = f"{self.__class__.__name__}"
 
         dictionary.pop("_sa_instance_state", None)
 
@@ -123,11 +123,7 @@ class BaseModel:
         dictionary = dict(self.__dict__)
         dictionary.pop("_sa_instance_state", None)
 
-        return "[{}] ({}) {}".format(
-            self.__class__.__name__,
-            self.id,
-            dictionary
-        )
+        return f"[{self.__class__.__name__}] ({self.id}) {dictionary}"
 
     if STORAGE_TYPE != 'db':
         def __setattr__(self, key, value):
