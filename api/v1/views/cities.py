@@ -119,7 +119,7 @@ def put_city(city_id):
     if not city:
         abort(404)
 
-    city_data = request.get_json()
+    city_data = request.get_json(silent=True)
     if not city_data:
         abort(400, "Not a JSON")
 
