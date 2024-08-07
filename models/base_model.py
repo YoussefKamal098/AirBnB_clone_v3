@@ -123,7 +123,11 @@ class BaseModel:
         dictionary = dict(self.__dict__)
         dictionary.pop("_sa_instance_state", None)
 
-        return f"[{self.__class__.__name__}] ({self.id}) {dictionary}"
+        return "[{}] ({}) {}".format(
+            self.__class__.__name__,
+            self.id,
+            dictionary
+        )
 
     if STORAGE_TYPE != 'db':
         def __setattr__(self, key, value):
