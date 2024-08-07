@@ -53,6 +53,7 @@ The following error codes are returned:
 400: Missing password
 200: OK
 201: Created
+
 """
 
 from flask import jsonify, abort, request
