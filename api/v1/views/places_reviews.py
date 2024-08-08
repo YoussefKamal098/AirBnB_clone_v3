@@ -42,7 +42,6 @@ Module Connections
 - Related Entities: While primarily focused on the `Review` class, this module
   also supports operations related to `Place` and `User` objects,
   as part of the main Flask application's broader functionality.
-
 """
 
 from flask import jsonify, request, abort
