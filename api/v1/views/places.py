@@ -21,7 +21,6 @@ def get_places(city_id):
 
     Return 200 status code with the list of Place objects
     with City with <city_id> in JSON format if success.
-
     """
     city = storage.get(City, city_id)
     if not city:
