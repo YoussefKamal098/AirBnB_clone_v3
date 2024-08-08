@@ -121,7 +121,7 @@ def put_user(user_id):
     if user_data is None:
         abort(400, "Not a JSON")
 
-    user.udpate(**user_data)
+    user.update(**user_data)
     user.save()
 
     return jsonify(user.to_dict()), 200
