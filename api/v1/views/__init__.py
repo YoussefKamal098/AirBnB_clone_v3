@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 """
 This module initializes the Flask blueprint for the API views.
+It imports all the views and sets the url prefix.
+It also initializes the blueprint.
+see each view for more information on the routes.
 """
 
 from flask import Blueprint
