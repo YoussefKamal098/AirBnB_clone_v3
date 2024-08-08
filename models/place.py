@@ -23,6 +23,9 @@ class Place(*parent_classes):
     """
     Place class represents a lodging place.
     """
+
+    NOT_UPDATABLE = ['user_id', 'city_id']
+
     if STORAGE_TYPE == "db":
         __tablename__ = 'places'
 
@@ -114,6 +117,21 @@ class Place(*parent_classes):
 
             if obj.id not in self.amenity_ids:
                 self.amenity_ids.append(obj.id)
+
+    def update(self, **kwargs):
+        """
+        Updates the City instance with the key/value pairs in kwargs.
+
+        This method updates only the attributes of the City instance
+        that can be updated.
+
+        Parameters:
+            **kwargs (dict): Arbitrary keyword arguments.
+        """
+        for attr in Place.NOT_UPDATABLE:
+            kwargs.pop(attr, None)
+
+        super().update(**kwargs)
 
 
 if STORAGE_TYPE == "db":
