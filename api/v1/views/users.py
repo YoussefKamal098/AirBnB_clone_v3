@@ -2,57 +2,6 @@
 """
 This module sets up a Flask route to return a JSON list of all User objects.
 It also allows for GET, POST, PUT, and DELETE requests.
-
-- GET requests return a JSON representation of a User object or
-    a 404 error if the User object does not exist.
-
-- POST requests create a new User object. returns a 400 error if the request is
-    not JSON formatted or if the JSON body is missing an email or password key.
-
-- PUT requests update a User object. returns a 404 error if the User
-    object does not exist or if the request is not JSON formatted.
-
-- DELETE requests delete a User object. returns a 404 error if
-    the User object does not exist.
-
-All responses are JSON formatted.
-
-** PUT requests are expected to have a JSON body with the following format:
-{
-    "email": "
-    "password": "
-}
-
-** POST requests are expected to have a JSON body with the following format:
-{
-    "email": "
-    "password": "
-}
-
-** PUT requests are expected to have a JSON body with the following format:
-{
-    "email": "
-    "password": "
-}
-
-DELETE requests are expected to have an empty JSON body.
-
-GET requests do not require a JSON body.
-
-The following routes are defined:
-GET /users
-GET /users/<user_id>
-DELETE /users/<user_id>
-POST /users
-PUT /users/<user_id>
-
-The following error codes are returned:
-404: Not found
-400: Not a JSON
-400: Missing email
-400: Missing password
-200: OK
-201: Created
 """
 from flask import jsonify, abort, request
 from models.user import User
@@ -95,7 +44,7 @@ def delete_user(user_id):
 @app_views.route("/users/", methods=["POST"])
 def post_user():
     """Create a new User object"""
-    user_data = request.get_json()
+    user_data = request.get_json(silent=True)
 
     if not user_data:
         abort(400, "Not a JSON")
@@ -117,7 +66,7 @@ def put_user(user_id):
     if not user:
         abort(404)
 
-    user_data = request.get_json()
+    user_data = request.get_json(silent=True)
     if user_data is None:
         abort(400, "Not a JSON")
 
