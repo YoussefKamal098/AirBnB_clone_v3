@@ -5,7 +5,8 @@ Module Overview
 This module defines the Flask routes and views for handling RESTful API actions
 related to the `Review` class. It supports the following HTTP methods: `GET`,
 `POST`, `PUT`, and `DELETE`. The routes return JSON-formatted responses and
-interact with the `Review` objects stored in the application's data storage system.
+interact with the `Review` objects stored in the application's
+data storage system.
 
 Functionality
 
@@ -23,11 +24,11 @@ Functionality
 
 - Integration: This module is integrated with the API blueprint in the
   `__init__.py` file and interacts with the `Review` class from the `models`
-  module. It utilizes the `storage` object to interface with the underlying file
-  storage or database engine.
+  module. It utilizes the `storage` object to interface with
+  the underlying file storage or database engine.
 
-- Data Handling: All responses are returned in JSON format, ensuring consistency
-  with the application's API design.
+- Data Handling: All responses are returned in JSON format,
+  ensuring consistency with the application's API design.
 
 Module Connections
 
@@ -35,11 +36,12 @@ Module Connections
   blueprint initialized in the `__init__.py` file.
 
 - Models Module: This module is directly connected to the `Review` class within
-  the `models` module, leveraging the `storage` object to perform data operations.
+  the `models` module, leveraging the `storage` object
+  to perform data operations.
 
 - Related Entities: While primarily focused on the `Review` class, this module
-  also supports operations related to `Place` and `User` objects, as part of the
-  main Flask application's broader functionality.
+  also supports operations related to `Place` and `User` objects,
+  as part of the main Flask application's broader functionality.
 """
 
 from flask import jsonify, request, abort
