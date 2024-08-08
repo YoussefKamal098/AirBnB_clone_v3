@@ -4,8 +4,6 @@
 This module provides functions for parsing and manipulating
 command line inputs.
 """
-
-from typing import Union
 import re
 import ast
 
