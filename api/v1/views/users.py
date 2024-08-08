@@ -60,7 +60,6 @@ from models import storage
 from api.v1.views import app_views
 
 
-@app_views.route("/users/", methods=["GET"])
 @app_views.route("/users", methods=["GET"])
 def get_users():
     """Return a JSON list of all User objects"""
