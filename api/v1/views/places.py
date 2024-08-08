@@ -13,7 +13,7 @@ from models import storage
 from api.v1.views import app_views
 
 
-@app_views.route("/api/v1/cities/<city_id>/places", methods=["GET"])
+@app_views.route("/api/v1/cities/<city_id>/places/", methods=["GET"])
 def get_places(city_id):
     """
     Return a JSON list of all Place objects in a City object with city_id.
