@@ -17,24 +17,6 @@ It also allows for GET, POST, PUT, and DELETE requests.
 
 All responses are JSON formatted.
 
-** PUT requests are expected to have a JSON body with the following format:
-{
-    "email": "
-    "password": "
-}
-
-** POST requests are expected to have a JSON body with the following format:
-{
-    "email": "
-    "password": "
-}
-
-** PUT requests are expected to have a JSON body with the following format:
-{
-    "email": "
-    "password": "
-}
-
 DELETE requests are expected to have an empty JSON body.
 
 GET requests do not require a JSON body.

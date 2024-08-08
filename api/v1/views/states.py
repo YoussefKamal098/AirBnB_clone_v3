@@ -18,25 +18,6 @@ It also allows for GET, POST, PUT, and DELETE requests.
 
 All responses are JSON formatted.
 
-** PUT requests are expected to have a JSON body with the following format:
-{
-    "name": "California"
-}
-
-** POST requests are expected to have a JSON body with the following format:
-{
-    "name": "California"
-}
-
-** PUT requests are expected to have a JSON body with the following format:
-{
-    "name": "California"
-}
-
-** DELETE requests are expected to have an empty JSON body.
-
-** GET requests do not require a JSON body.
-
 The following routes are defined:
 GET /states
 GET /states/<state_id>

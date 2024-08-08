@@ -19,17 +19,6 @@ It also allows for GET, POST, PUT, and DELETE requests.
 
 All responses are JSON formatted.
 
-** PUT requests are expected to have a JSON body with the following format:
-{ "name": "Wifi" }
-
-** POST requests are expected to have a JSON body with the following format:
-{ "name": "Wifi" }
-
-** PUT requests are expected to have a JSON body with the following format:
-{ "name": "Wifi" } DELETE requests are expected to have an empty JSON body.
-
-** GET requests do not require a JSON body.
-
 The following routes are defined:
 GET /amenities GET /amenities/<amenity_id>
 DELETE /amenities/<amenity_id>

@@ -17,21 +17,6 @@ a 404 error is returned if the City object does not exist.
 - PUT requests update a City object. A 404 error is returned
 if the City object does not exist or if the request is not JSON formatted
 
-** PUT requests are expected to have a JSON body with the following format:
-{
-    "name": "New York"
-}
-
-** POST requests are expected to have a JSON body with the following format:
-{
-    "name": "New York"
-}
-
-** PUT requests are expected to have a JSON body with the following format:
-{
-    "name": "New York"
-}
-
 DELETE requests are expected to have an empty JSON body.
 
 GET requests do not require a JSON body.

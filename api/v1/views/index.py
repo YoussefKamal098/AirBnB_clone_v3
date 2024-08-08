@@ -1,6 +1,10 @@
 #!/usr/bin/python3
 """
 This module sets up a Flask route to return the status of the application.
+It also allows for GET requests to retrieve the number of each object type.
+
+- GET requests return a JSON representation of the status of the application.
+    that contains the number of each object type.
 """
 
 from flask import jsonify
