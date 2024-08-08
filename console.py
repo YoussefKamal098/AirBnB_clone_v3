@@ -66,7 +66,7 @@ class HBNBCommand(cmd.Cmd):
                     `name="My_little_house`"
                 Float: <unit>.<decimal> => contains a dot .
                 Integer: <number> => default case
-            If any parameter doesn't fit with these requirements or can't be
+            If any parameter doesnt fit with these requirements or cant be
             recognized correctly by the program, it will be skipped
 
         """
