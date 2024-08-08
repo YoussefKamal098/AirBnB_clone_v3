@@ -21,6 +21,9 @@ class Review(*parent_classes):
     """
     Review class represents a review of a place.
     """
+
+    NOT_UPDATABLE = ['user_id', 'city_id', 'place_id']
+
     if STORAGE_TYPE == "db":
         __tablename__ = 'reviews'
 

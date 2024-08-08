@@ -42,18 +42,3 @@ class City(*parent_classes):
     else:
         name = ""
         state_id = ""
-
-    def update(self, **kwargs):
-        """
-        Updates the City instance with the key/value pairs in kwargs.
-
-        This method updates only the attributes of the City instance
-        that can be updated.
-
-        Parameters:
-            **kwargs (dict): Arbitrary keyword arguments.
-        """
-        for attr in City.NOT_UPDATABLE:
-            kwargs.pop(attr, None)
-
-        super().update(**kwargs)

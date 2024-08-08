@@ -110,7 +110,7 @@ class BaseModel:
         from models import storage
 
         for attr, value in kwargs.items():
-            if attr not in BaseModel.NOT_UPDATABLE:
+            if attr not in set(self.NOT_UPDATABLE + BaseModel.NOT_UPDATABLE):
                 storage.update(self, attr=attr, value=value)
 
     def __str__(self):
