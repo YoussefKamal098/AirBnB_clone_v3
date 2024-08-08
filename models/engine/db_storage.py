@@ -47,9 +47,11 @@ class DBStorage(Storage):
         ] if not var_value]
 
         if missing_vars:
-            raise ValueError(f"Missing the following environment "
-                             f"variables for database connection: "
-                             f"{', '.join(missing_vars)}")
+            raise ValueError(
+                "Missing the following environment "
+                "variables for database connection: "
+                "{}".format(', '.join(missing_vars))
+            )
 
         self._connect(user, pwd, host, db)
 
@@ -62,7 +64,7 @@ class DBStorage(Storage):
         Creates a database engine connection using SQLAlchemy.
         """
         cls.__engine = create_engine(
-            f"mysql+mysqldb://{user}:{pwd}@{host}/{db}",
+            "mysql+mysqldb://{}:{}@{}/{}".format(user, pwd, host, db),
             pool_pre_ping=pool_pre_ping
         )
 

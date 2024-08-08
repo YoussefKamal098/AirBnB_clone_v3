@@ -79,7 +79,9 @@ class FrozenDict:
             AttributeError: Always raised to indicate
             that setting is not allowed.
         """
-        raise AttributeError(f"Can't set The '{key}' key, dict is immutable")
+        raise AttributeError(
+            "Can't set The '{}' key, dict is immutable".format(key)
+        )
 
     def keys(self):
         """
@@ -208,9 +210,13 @@ class SealedDict(FrozenDict):
                 if the value has an incompatible type.
         """
         if key not in self.keys():
-            raise AttributeError(f"The dict doesn't contain '{key}' key")
+            raise AttributeError(
+                "The dict doesn't contain '{}' key".format(key)
+            )
         elif type(self[key]) is not type(value):
-            raise AttributeError(f"The '{key}' key must be "
-                                 f"'{self[key].__class__.__name__}' type")
+            raise AttributeError(
+                "The '{}' key must be '{}' type"
+                .format(key, self[key].__class__.__name__)
+            )
 
         self._d[key] = value
