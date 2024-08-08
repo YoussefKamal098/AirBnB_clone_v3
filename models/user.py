@@ -26,7 +26,7 @@ class User(*parent_classes):
     if STORAGE_TYPE == "db":
         __tablename__ = 'users'
 
-        email = Column(String(128), nullable=False, unique=True, index=True)
+        email = Column(String(128), nullable=False, index=True)
         password = Column(String(128), nullable=False)
         first_name = Column(String(128), index=True)
         last_name = Column(String(128), index=True)
