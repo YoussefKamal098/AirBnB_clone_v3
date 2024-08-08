@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-This module sets up and runs a Flask application for the HBNB API. It also sets up a CORS policy.
+This module sets up and runs a Flask application for the HBNB API.
+It also sets up a CORS policy.
 """
 
 import os
