@@ -93,13 +93,13 @@ class Place(*parent_classes):
             from models import storage
 
             amenities = storage.all(Amenity)
-            related_places = []
+            related_amenities = []
 
             for amenity in amenities.values():
                 if amenity.id in self.amenity_ids:
-                    related_places.append(amenity)
+                    related_amenities.append(amenity)
 
-            return related_places
+            return related_amenities
 
         @amenities.setter
         def amenities(self, obj):
