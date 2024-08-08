@@ -263,7 +263,7 @@ class HBNBCommand(cmd.Cmd):
             this implementation).
         """
         for i, line in enumerate(self.__history):
-            print(f"{i:02}. {line}")
+            print("{i:02}. {line}".format(i=i, line=line))
 
     def add_history(self, line):
         """
@@ -299,7 +299,7 @@ class HBNBCommand(cmd.Cmd):
         """Saves the current command history to the file."""
         with open(self.__history_file, "w") as file:
             for line in self.__history:
-                file.write(f"{line}\n")
+                file.write("{line}\n".format(line=line))
 
     def completedefault(self, *args):
         """
