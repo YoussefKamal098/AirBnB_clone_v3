@@ -156,7 +156,7 @@ class FrozenDict:
         Returns:
             str: String representation of the FrozenDict.
         """
-        return f'{self.__class__.__name__}({self._d})'
+        return "{}({})".format(self.__class__.__name__, self._d)
 
     def __setattr__(self, key, value):
         """
