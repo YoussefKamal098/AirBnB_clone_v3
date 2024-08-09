@@ -129,37 +129,48 @@ def places_search():
     and amenity linked to the Place.
 
     The JSON should have the following keys:
-    - states: list of state ids to filter by
-    - cities: list of city ids to filter by
-    - amenities: list of amenity ids to filter by
+    - states: list of state ids to filter by (OR logic) (empty list means all)
+    - cities: list of city ids to filter by (OR logic) (empty list means all)
+    - amenities:
+        list of amenity ids to filter by (AND logic) (empty list means all)
+
     If the JSON is empty, return all Place objects.
 
     Return 200 with a list of Place objects in JSON format if success.
     """
+
+    # Get search data as JSON
+    # (Return 400 (Bad Request) if not JSON data is provided)
     search_data = request.get_json(silent=True)
     if search_data is None:
         abort(400, "Not a JSON")
 
+    # Fetch all places
     places = storage.all(Place).values()
-    if "states" in search_data:
-        places = [
-            place for place in places
-            if place.city.state_id in search_data["states"]
-        ]
 
-    if "cities" in search_data:
-        places = [
-            place for place in places
-            if place.city_id in search_data["cities"]
-        ]
+    filtered_places = []
+    for place in places:
+        # Check state filter (skip if no state filter)
+        state_matches = True
+        if search_data.get("states"):
+            state_matches = place.city.state_id in search_data["states"]
 
-    if "amenities" in search_data:
-        places = [
-            place for place in places
-            if place.amenities and all(
-                amenity.id in search_data["amenities"]
-                for amenity in place.amenities
+        # Check city filter (skip if no city filter)
+        city_matches = True
+        if search_data.get("cities"):
+            city_matches = place.city_id in search_data["cities"]
+
+        # Check amenity filter (skip if no amenity filter)
+        amenity_matches = True
+        if search_data.get("amenities"):
+            amenity_matches = all(
+                amenity_id in [amenity.id for amenity in place.amenities]
+                for amenity_id in search_data["amenities"]
             )
-        ]
 
-    return jsonify([place.to_dict() for place in places])
+        # Add place if all relevant filters match
+        if (state_matches or city_matches) and amenity_matches:
+            filtered_places.append(place)
+
+    # Return JSON response with list of place dictionaries
+    return jsonify([place.to_dict() for place in filtered_places])
