@@ -56,6 +56,17 @@ class User(*parent_classes):
 
         super().__init__(*args, **kwargs)
 
+    def to_dict(self):
+        """
+        Returns a dictionary representation of the User instance.
+
+        Returns:
+        - A dictionary containing the User information.
+        """
+        user_dict = super().to_dict()
+        user_dict.pop("password", None)
+        return user_dict
+
     def hash_password(self, pwd):
         """
         Hashes a password using the MD5 algorithm.
