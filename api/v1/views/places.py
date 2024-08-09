@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """
 This module sets up a Flask route to return a JSON list of all Place objects.
-It also allows for GET, POST, PUT, and DELETE requests.
+It also allows for GET, POST, PUT, and DELETE requests. and it also searches
+for Place objects by state, city, and amenity linked to the Place.
 """
 from flask import jsonify, abort, request
 
@@ -116,3 +117,49 @@ def put_place(place_id):
     place.save()
 
     return jsonify(place.to_dict()), 200
+
+
+@app_views.route('/places_search', methods=['POST'])
+def places_search():
+    """
+    Search for Place objects based on the JSON in the request.
+    Return 400 if not a JSON.
+
+    It filters the Place objects by state, city,
+    and amenity linked to the Place.
+
+    The JSON should have the following keys:
+    - states: list of state ids to filter by
+    - cities: list of city ids to filter by
+    - amenities: list of amenity ids to filter by
+    If the JSON is empty, return all Place objects.
+
+    Return 200 with a list of Place objects in JSON format if success.
+    """
+    search_data = request.get_json(silent=True)
+    if search_data is None:
+        abort(400, "Not a JSON")
+
+    places = storage.all(Place).values()
+    if "states" in search_data:
+        places = [
+            place for place in places
+            if place.city.state_id in search_data["states"]
+        ]
+
+    if "cities" in search_data:
+        places = [
+            place for place in places
+            if place.city_id in search_data["cities"]
+        ]
+
+    if "amenities" in search_data:
+        places = [
+            place for place in places
+            if all(
+                amenity.id in search_data["amenities"]
+                for amenity in place.amenities
+            )
+        ]
+
+    return jsonify([place.to_dict() for place in places])
