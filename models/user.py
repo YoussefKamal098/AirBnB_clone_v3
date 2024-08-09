@@ -3,6 +3,7 @@
 This module defines the User class, which inherits from the BaseModel class.
 """
 import os
+import hashlib
 
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
@@ -40,3 +41,29 @@ class User(*parent_classes):
         password = ""
         first_name = ""
         last_name = ""
+
+    def __init__(self, *args, **kwargs):
+        """
+        Initializes a new User instance. If a password is provided,
+        it is hashed before being stored.
+
+        Parameters:
+        - *args: Variable-length argument list.
+        - **kwargs: Arbitrary keyword arguments.
+        """
+        if "password" in kwargs:
+            kwargs["password"] = self.hash_password(kwargs["password"])
+
+        super().__init__(*args, **kwargs)
+
+    def hash_password(self, pwd):
+        """
+        Hashes a password using the MD5 algorithm.
+
+        Parameters:
+        - pwd: The password to hash.
+
+        Returns:
+        - The hashed password.
+        """
+        return hashlib.md5(pwd.encode()).hexdigest()
