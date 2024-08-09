@@ -128,6 +128,7 @@ class Place(*parent_classes):
         place_dict = super().to_dict()
 
         place_dict.pop('city', None)
+        place_dict.pop('amenities', None)
 
         return place_dict
 
