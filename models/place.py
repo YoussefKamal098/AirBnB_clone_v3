@@ -118,6 +118,19 @@ class Place(*parent_classes):
             if obj.id not in self.amenity_ids:
                 self.amenity_ids.append(obj.id)
 
+    def to_dict(self):
+        """
+        Returns a dictionary representation of the object.
+
+        Returns:
+        - dictionary (dict[str, any]): Dictionary containing object attributes.
+        """
+        place_dict = super().to_dict()
+
+        place_dict.pop('city', None)
+
+        return place_dict
+
 
 if STORAGE_TYPE == "db":
     place_amenity = Table(
