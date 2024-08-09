@@ -136,38 +136,30 @@ def places_search():
 
     Return 200 with a list of Place objects in JSON format if success.
     """
-    if request.get_json() is not None:
-        params = request.get_json()
-        states = params.get('states', [])
-        cities = params.get('cities', [])
-        amenities = params.get('amenities', [])
-        amenity_objects = []
-        for amenity_id in amenities:
-            amenity = storage.get('Amenity', amenity_id)
-            if amenity:
-                amenity_objects.append(amenity)
-        if states == cities == []:
-            places = storage.all('Place').values()
-        else:
-            places = []
-            for state_id in states:
-                state = storage.get('State', state_id)
-                state_cities = state.cities
-                for city in state_cities:
-                    if city.id not in cities:
-                        cities.append(city.id)
-            for city_id in cities:
-                city = storage.get('City', city_id)
-                for place in city.places:
-                    places.append(place)
-        confirmed_places = []
-        for place in places:
-            place_amenities = place.amenities
-            confirmed_places.append(place.to_dict())
-            for amenity in amenity_objects:
-                if amenity not in place_amenities:
-                    confirmed_places.pop()
-                    break
-        return jsonify(confirmed_places)
-    else:
-        return abort(400, 'Not a JSON')
+    search_data = request.get_json(silent=True)
+    if search_data is None:
+        abort(400, "Not a JSON")
+
+    places = storage.all(Place).values()
+    if "states" in search_data:
+        places = [
+            place for place in places
+            if place.city.state_id in search_data["states"]
+        ]
+
+    if "cities" in search_data:
+        places = [
+            place for place in places
+            if place.city_id in search_data["cities"]
+        ]
+
+    if "amenities" in search_data:
+        places = [
+            place for place in places
+            if all(
+                amenity.id in search_data["amenities"]
+                for amenity in place.amenities
+            )
+        ]
+
+    return jsonify([place.to_dict() for place in places])
