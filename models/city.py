@@ -42,3 +42,16 @@ class City(*parent_classes):
     else:
         name = ""
         state_id = ""
+
+    if STORAGE_TYPE != "db":
+        @property
+        def places(self):
+            """
+            Getter attribute that returns a list of Place instances
+            where the city_id is equal to the current `City.id`
+            """
+            from models import storage
+            return [
+                place for place in storage.all("Place").values()
+                if place.city_id == self.id
+            ]
