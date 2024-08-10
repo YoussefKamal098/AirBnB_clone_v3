@@ -4,7 +4,7 @@
 from os import getenv
 import json
 import unittest
-from api.v1.app import *
+from api.v1.app import app
 
 
 storage = getenv("HBNB_TYPE_STORAGE")

@@ -2,8 +2,9 @@
 """testing the index route"""
 import json
 import unittest
-from api.v1.app import *
 from models.amenity import Amenity
+from models import storage
+from api.v1.app import app
 
 
 class TestAmenities(unittest.TestCase):

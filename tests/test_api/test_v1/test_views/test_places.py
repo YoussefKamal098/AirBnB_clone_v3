@@ -6,7 +6,8 @@ from models.place import Place
 from models.city import City
 from models.state import State
 from models.user import User
-from api.v1.app import *
+from models import storage
+from api.v1.app import app
 
 
 class TestPlaces(unittest.TestCase):
