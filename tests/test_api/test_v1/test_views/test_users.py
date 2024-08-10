@@ -3,8 +3,7 @@
 import json
 import unittest
 from models.user import User
-from models import storage
-from api.v1.app import app
+from api.v1.app import *
 
 
 class TestUsers(unittest.TestCase):

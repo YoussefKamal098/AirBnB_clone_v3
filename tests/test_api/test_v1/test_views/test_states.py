@@ -3,8 +3,7 @@
 import json
 import unittest
 from models.state import State
-from models import storage
-from api.v1.app import app
+from api.v1.app import *
 
 
 class TestStates(unittest.TestCase):

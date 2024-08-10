@@ -4,8 +4,7 @@ import json
 import unittest
 from models.state import State
 from models.city import City
-from models import storage
-from api.v1.app import app
+from api.v1.app import *
 
 
 class TestCities(unittest.TestCase):
