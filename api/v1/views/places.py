@@ -131,14 +131,13 @@ def places_search():
     The JSON should have the following keys:
     - states: list of state ids to filter by (OR logic) (empty list means all)
     - cities: list of city ids to filter by (OR logic) (empty list means all)
-    - amenities:
-        list of amenity ids to filter by (AND logic) (empty list means all)
+    - amenities: list of amenity ids to filter by \
+        (AND logic) (empty list means all)
 
     If the JSON is empty, return all Place objects.
 
     Return 200 with a list of Place objects in JSON format if success.
     """
-
     # Get search data as JSON
     # (Return 400 (Bad Request) if not JSON data is provided)
     search_data = request.get_json(silent=True)
@@ -148,27 +147,45 @@ def places_search():
     # Fetch all places
     places = storage.all(Place).values()
 
+    # List to store filtered places
     filtered_places = []
+
+    # Iterate through all places
     for place in places:
-        # Check state filter (skip if no state filter)
+        # Initialize variables to track filter matches (default True)
         state_matches = True
+        city_matches = True
+
+        # Check for state filter
         if search_data.get("states"):
+            # Check if place's city state matches any in search data
             state_matches = place.city.state_id in search_data["states"]
 
-        # Check city filter (skip if no city filter)
-        city_matches = True
-        if search_data.get("cities"):
+            # If state filter matches, set city_matches to False (OR logic)
+            city_matches = False
+
+        # Check for city filter (only if no state filter or \
+        # "cities" key exists)
+        if ((not state_matches or not search_data.get("states"))
+                and search_data.get("cities")):
+            # Check if place's city ID matches any in search data
             city_matches = place.city_id in search_data["cities"]
 
-        # Check amenity filter (skip if no amenity filter)
+            # If city filter matches, set state_matches to False (OR logic)
+            state_matches = False
+
+        # Check for amenity filter
         amenity_matches = True
         if search_data.get("amenities"):
+            # Check if all amenity IDs in search data are present \
+            # in the place's amenities
             amenity_matches = all(
                 amenity_id in [amenity.id for amenity in place.amenities]
                 for amenity_id in search_data["amenities"]
             )
 
-        # Add place if all relevant filters match
+        # Add place to filtered list if state or \
+        # city matches AND all amenity matches
         if (state_matches or city_matches) and amenity_matches:
             filtered_places.append(place)
 
