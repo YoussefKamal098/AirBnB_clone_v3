@@ -166,8 +166,8 @@ def places_search():
 
         # Check for city filter (only if no state filter or \
         # "cities" key exists)
-        if ((not state_matches or not search_data.get("states"))
-                and search_data.get("cities")):
+        if ((not state_matches or not search_data.get("states")) and
+                search_data.get("cities")):
             # Check if place's city ID matches any in search data
             city_matches = place.city_id in search_data["cities"]
 
