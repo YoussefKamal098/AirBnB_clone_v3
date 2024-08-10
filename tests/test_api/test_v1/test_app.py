@@ -7,7 +7,7 @@ Flask application for the HBNB API
 import unittest
 import flask
 
-from api.v1.app import app
+from api.v1.app import *
 
 
 class AppTestCase(unittest.TestCase):
