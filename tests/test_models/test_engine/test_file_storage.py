@@ -1,4 +1,4 @@
-#!/usr/bin/
+#!/usr/bin/python3
 """test for File storage"""
 import os
 import unittest
