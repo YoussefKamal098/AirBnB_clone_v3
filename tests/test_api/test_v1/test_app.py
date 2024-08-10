@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """
 test api/v1/app.py module that sets up and runs a
 Flask application for the HBNB API
